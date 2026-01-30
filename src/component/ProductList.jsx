@@ -40,9 +40,6 @@ const ProductList = () => {
                     alt="Product Image"
                     className="w-full h-60 object-cover group-hover:scale-105 transition-transform"
                   />
-                  <span className="absolute top-3 right-3 bg-black text-white text-xs px-2 py-1 rounded">
-                    {id}
-                  </span>
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-bold text-gray-900 mb-1">

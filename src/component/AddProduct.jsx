@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AddProduct = () => {
+  const queryClient = useQueryClient();
   const [state, setState] = useState({
     title: "",
     description: "",
@@ -8,18 +11,28 @@ const AddProduct = () => {
     rating: 5,
     thumbnail: "",
   });
+  const mutation = useMutation({
+    mutationFn: (newProduct) =>
+      axios.post("http://localhost:3000/products", newProduct),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+    },
+  });
   const submitAddProduct = (e) => {
     e.preventDefault();
+    const newProductId = { ...state, id: crypto.randomUUID().toString() };
+    mutation.mutate(newProductId);
   };
 
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
     const name = e.target.name;
-    const value = e.target.type === 'number' ? e.target.valueAsNumber : e.target.value;
+    const value =
+      e.target.type === "number" ? e.target.valueAsNumber : e.target.value;
     setState({
-        ...state,
-        [name]: value
-    })
-  }
+      ...state,
+      [name]: value,
+    });
+  };
   return (
     <div className="p-12">
       <div className="max-w-md mx-auto  bg-white shadow-lg rounded-lg overflow-hidden">
