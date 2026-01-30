@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const allProducts = async ({ queryKey }) => {
   const response = await axios.get(`http://localhost:3000/${queryKey}`);
@@ -15,10 +16,11 @@ const ProductList = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: allProducts,
-    retry: false
+    retry: false,
   });
 
-   if (loading) return <div className="p-12">Fetching Loading Products Data...</div>;
+  if (loading)
+    return <div className="p-12">Fetching Loading Products Data...</div>;
   if (error) return <div className="p-12">{error.message}</div>;
 
   return (
@@ -51,8 +53,8 @@ const ProductList = () => {
                     <span className="text-lg font-semibold text-green-600">
                       ${price}
                     </span>
-                    <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">
-                      Buy
+                    <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 cursor-pointer">
+                      Show Details
                     </button>
                   </div>
                 </div>

@@ -9,6 +9,7 @@ const allProduct = async ({ queryKey }) => {
 };
 
 const ProductDetails = ({ id }) => {
+  
   const {
     data: product,
     loading,
@@ -21,51 +22,54 @@ const ProductDetails = ({ id }) => {
   if (error) return <div>{error.message}</div>;
   return (
     <div className="p-12">
-      <h1 className="text-2xl text-blue-500 mb-5">Product Details</h1>
-      <div className="py-8">
-        <div key={id} className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row -mx-4">
-            <div className="md:flex-1 px-4">
-              <div className=" rounded-lg   mb-4">
-                <img
-                  className="w-full h-full object-cover"
-                  src={product.thumbnail}
-                  alt="Product Image"
-                />
+      <div className="max-w-md mx-auto  bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
+          Product Details
+        </div>
+        <div key={id} className=" mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-2">
+            {product && (
+              <div className="md:flex-1 px-4">
+                <div className="relative">
+                  <img
+                    src={product.thumbnail}
+                    alt="Product Image"
+                    className="w-full h-60 object-cover group-hover:scale-105 transition-transform"
+                  />
+                  <span className="absolute top-3 right-3 bg-black text-white text-xs px-2 py-1 rounded">
+                    {id}
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
             <div className="md:flex-1 px-4">
               <h2 className="text-2xl font-bold text-gray-800  mb-2">
                 Product Name
               </h2>
-              <p className="text-gray-600  text-sm mb-4">
-               {product.title}
-              </p>
+              {product && (
+                <p className="text-gray-600  text-sm mb-4">{product.title}</p>
+              )}
               <div className="flex mb-4">
-                <div className="mr-4">
-                  <span className="font-bold text-gray-700 ">
-                    Price: 
-                  </span>
-                  <span className="text-gray-600 ">
-                     ${product.price}
-                  </span>
-                </div>
+                {product && (
+                  <div className="mr-4">
+                    <span className="font-bold text-gray-700 ">Price:</span>
+                    <span className="text-gray-600 ">${product.price}</span>
+                  </div>
+                )}
                 <div>
                   <span className="font-bold text-gray-700 ">
                     Availability:
                   </span>
-                  <span className="text-gray-600 ">
-                    In Stock
-                  </span>
+                  <span className="text-gray-600 ">In Stock</span>
                 </div>
               </div>
               <div>
                 <span className="font-bold text-gray-700 ">
                   Product Description:
                 </span>
-                <p className="text-gray-600  text-sm mt-2">
+                {product && <p className="text-gray-600  text-sm mt-2">
                   {product.description}
-                </p>
+                </p>}
               </div>
             </div>
           </div>
